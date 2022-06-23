@@ -2,13 +2,15 @@ package steps;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.cucumber.datatable.dependency.com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import pages.WikipediaPage;
 import utils.Driver;
+
 
 public class WikipediaSteps {
 
@@ -30,5 +32,14 @@ public class WikipediaSteps {
     public void userShouldSeeInTheFirstHeading(String key) {
         Assert.assertTrue(wikipediaPage.firstHeading.isDisplayed());
         Assert.assertTrue(wikipediaPage.firstHeading.getText().contains(key));
+    }
+
+    @Then("user should see below languages around the logo")
+    public void userShouldSeeBelowLanguagesAroundTheLogo(DataTable dataTable) {
+        for (int i = 0; i < dataTable.asList().size(); i++) {
+
+
+            Assert.assertEquals(dataTable.asList().get(i), wikipediaPage.mainLanguages.get(i).getText());
+        }
     }
 }
